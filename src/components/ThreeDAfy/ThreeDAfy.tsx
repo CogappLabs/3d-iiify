@@ -311,7 +311,8 @@ const ThreeDAfy: React.FC = () => {
         <p className={styles.lede}>
           Cogapp hack project by Luke Watson-Davies. Map a IIIF image onto a 3D
           model, or pick a 3D model from a IIIF manifest and texture it with an
-          image. Outputs a synthesised IIIF manifest rendered with Clover.
+          image. Outputs a brand-new GLB file that you can use in your own
+          manifests.
         </p>
 
         {error && (
