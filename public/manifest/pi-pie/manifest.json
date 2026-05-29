@@ -1,0 +1,75 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:3000/manifest/pi-pie/manifest.json",
+  "type": "Manifest",
+  "label": { "en": ["Pi Pie (image-on-mesh demo)"] },
+  "summary": {
+    "en": [
+      "A 3D pie with an image of pi painted onto its baseColor channel via the Clover 3D mesh-selector painting annotation extension."
+    ]
+  },
+  "metadata": [
+    {
+      "label": { "en": ["3D Model"] },
+      "value": {
+        "en": [
+          "Pie by Yacob (https://sketchfab.com/3d-models/pie-1b2792e199ed472ba2d7e9d62b1d3565) - CC-BY-4.0"
+        ]
+      }
+    },
+    {
+      "label": { "en": ["Texture image"] },
+      "value": {
+        "en": ["Pi (digits of π) - original composition, public domain."]
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0",
+      "type": "Canvas",
+      "label": { "en": ["Pi Pie"] },
+      "height": 1000,
+      "width": 1000,
+      "items": [
+        {
+          "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/page/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/anno/model",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "http://localhost:3000/manifest/pi-pie/pie.glb",
+                "type": "Model",
+                "format": "model/gltf-binary",
+                "label": { "en": ["Pie (glTF)"] }
+              },
+              "target": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0"
+            },
+            {
+              "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/anno/pi-texture",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "http://localhost:3000/manifest/pi-pie/pi.jpg",
+                "type": "Image",
+                "format": "image/jpeg"
+              },
+              "target": {
+                "type": "SpecificResource",
+                "source": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0",
+                "selector": {
+                  "type": "FragmentSelector",
+                  "conformsTo": "https://iiif.io/api/extension/3d-mesh-selector/",
+                  "value": "channel=baseColor"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

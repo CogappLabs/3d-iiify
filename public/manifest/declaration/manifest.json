@@ -1,0 +1,57 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:3000/manifest/declaration/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": ["Declaration of Independence (1776)"]
+  },
+  "summary": {
+    "en": [
+      "Static IIIF Image API 3 (level0) tile pyramid generated with vips dzsave."
+    ]
+  },
+  "items": [
+    {
+      "id": "http://localhost:3000/manifest/declaration/manifest.json/canvas/0",
+      "type": "Canvas",
+      "label": { "en": ["Declaration of Independence"] },
+      "height": 9140,
+      "width": 7503,
+      "thumbnail": [
+        {
+          "id": "http://localhost:3000/manifest/declaration/declaration/full/235,286/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg"
+        }
+      ],
+      "items": [
+        {
+          "id": "http://localhost:3000/manifest/declaration/manifest.json/canvas/0/page/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:3000/manifest/declaration/manifest.json/canvas/0/anno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "http://localhost:3000/manifest/declaration/texture.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 1681,
+                "height": 2048,
+                "service": [
+                  {
+                    "id": "http://localhost:3000/manifest/declaration/declaration",
+                    "type": "ImageService3",
+                    "profile": "level0"
+                  }
+                ]
+              },
+              "target": "http://localhost:3000/manifest/declaration/manifest.json/canvas/0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

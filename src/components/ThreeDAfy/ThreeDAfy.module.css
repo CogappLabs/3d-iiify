@@ -1,0 +1,440 @@
+@font-face {
+  font-family: "Civil";
+  src: url("/fonts/civil/CivilPremium-Regular2.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Civil";
+  src: url("/fonts/civil/CivilPremium-Medium2.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Civil";
+  src: url("/fonts/civil/CivilPremium-SemiBold2.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Untitled Serif";
+  src: url("/fonts/untitled-serif/untitled-serif-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Untitled Serif";
+  src: url("/fonts/untitled-serif/untitled-serif-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.root {
+  --black: #000;
+  --slate: #282828;
+  --cream: #ebebe1;
+  --grey: #717171;
+  --light-grey: #f6f6f7;
+  --white: #fff;
+  --accent-pink: #ffdaea;
+  --accent-green: #edffda;
+  --accent-purple: #e8daff;
+  --accent-blue: #dae9ff;
+  --focus-blue: #227bff;
+  --font-serif: "Untitled Serif", Georgia, Times, "Times New Roman", serif;
+  --font-sans:
+    Civil, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  font-family: var(--font-sans);
+  color: var(--slate);
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.h1,
+.h2,
+.h3 {
+  font-family: var(--font-serif);
+  color: var(--black);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0;
+}
+
+.h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.h2 {
+  font-size: 1.75rem;
+  margin: 2rem 0 1rem;
+}
+
+.h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.lede {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.45;
+  max-width: 65ch;
+  margin: 0 0 2rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.7rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--slate);
+  background: var(--white);
+  font: 1rem / 1.4 var(--font-sans);
+  color: var(--slate);
+}
+
+.input:focus {
+  outline: 2px solid var(--focus-blue);
+  outline-offset: 2px;
+}
+
+.button {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--slate);
+  background: var(--slate);
+  color: var(--white);
+  font: 500 0.9rem / 1 var(--font-sans);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.05s;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--accent-pink);
+  color: var(--black);
+  border-color: var(--black);
+  outline: none;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  background: var(--accent-pink);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.buttonPrimary:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 0 0 1rem;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.card > strong,
+.card > div {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.card > strong {
+  padding-top: 0.75rem;
+}
+
+.card > img + strong {
+  padding-top: 0.85rem;
+}
+
+.card:hover {
+  border-color: var(--slate);
+  transform: translateY(-2px);
+}
+
+.cardBody {
+  padding: 0.75rem 1rem 1rem;
+}
+
+.cardImage {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: var(--light-grey);
+  display: block;
+}
+
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cardMeta {
+  font-size: 0.8rem;
+  color: var(--grey);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardAttribution {
+  font-size: 0.75rem;
+  color: var(--grey);
+  padding: 0 1rem 0.75rem;
+}
+
+.cardAttribution a {
+  color: var(--slate);
+}
+
+.error {
+  background: var(--accent-pink);
+  border: 1px solid var(--black);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-sans);
+}
+
+.stepHeading {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 0.25rem;
+}
+
+.viewRoot {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  font-family: var(--font-sans);
+  color: var(--slate);
+}
+
+.viewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.viewHeader strong {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.brand {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.brand:hover {
+  text-decoration: underline;
+}
+
+.headerCentre {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+}
+
+.headerSummary {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--slate);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerSummary em {
+  font-style: italic;
+  color: var(--black);
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.modelCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.15s,
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+.modelCard:hover,
+.modelCard:focus-visible {
+  border-color: var(--slate);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  outline: none;
+}
+
+.modelCard:hover .modelEmoji,
+.modelCard:focus-visible .modelEmoji {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.modelEmoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.modelLabel {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--black);
+}
+
+.modelAttribution {
+  font-size: 0.75rem;
+  color: var(--grey);
+  margin-top: auto;
+}
+
+.modelAttribution a {
+  color: var(--slate);
+  text-decoration: underline;
+  text-decoration-color: rgba(40, 40, 40, 0.3);
+}
+
+.modelAttribution a:hover {
+  text-decoration-color: var(--slate);
+}
+
+.savedBanner {
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-green);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+.savedBanner a {
+  color: var(--slate);
+}
+
+.footnote {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.85rem;
+  color: var(--grey);
+  max-width: 100%;
+}
+
+.footnote code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--white);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.select {
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--slate);
+  background: var(--white);
+  font: inherit;
+  color: var(--slate);
+}
+
+.picked {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0.75rem;
+  background: var(--white);
+  border-radius: 12px;
+}
+
+.pickedImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--light-grey);
+}

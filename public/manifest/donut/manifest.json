@@ -1,0 +1,72 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:3000/manifest/donut/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": ["Donut Recipe (IIIF 3D + texture annotation demo)"]
+  },
+  "summary": {
+    "en": [
+      "A 3D donut (CC-BY-4.0, by 8bit on Sketchfab) with its recipe painted onto the surface via a proposed IIIF 3D mesh-selector texture annotation."
+    ]
+  },
+  "metadata": [
+    {
+      "label": { "en": ["3D Model"] },
+      "value": {
+        "en": [
+          "Donut by 8bit (https://sketchfab.com/3d-models/donut-d087babd816d4121a739bb8bf3f021e1) - CC-BY-4.0"
+        ]
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "http://localhost:3000/manifest/donut/manifest.json/canvas/0",
+      "type": "Canvas",
+      "label": { "en": ["Donut"] },
+      "height": 1000,
+      "width": 1000,
+      "items": [
+        {
+          "id": "http://localhost:3000/manifest/donut/manifest.json/canvas/0/page/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:3000/manifest/donut/manifest.json/canvas/0/anno/model",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "http://localhost:3000/manifest/donut/donut.glb",
+                "type": "Model",
+                "format": "model/gltf-binary",
+                "label": { "en": ["Donut (glTF)"] }
+              },
+              "target": "http://localhost:3000/manifest/donut/manifest.json/canvas/0"
+            },
+            {
+              "id": "http://localhost:3000/manifest/donut/manifest.json/canvas/0/anno/recipe",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "type": "TextualBody",
+                "language": "en",
+                "format": "text/plain",
+                "value": "GLAZED DONUTS\n\nINGREDIENTS\n2 1/4 tsp active dry yeast\n1 cup warm whole milk\n1/4 cup sugar\n2 large eggs\n3 1/2 cups flour\n1/2 tsp salt\n6 tbsp butter, softened\nOil for frying\n\nGLAZE\n2 cups icing sugar\n3 tbsp milk\n1 tsp vanilla\n\nMETHOD\n1. Bloom yeast in warm milk with sugar.\n2. Mix in eggs, flour, salt, butter. Knead until smooth.\n3. Prove 1 hour until doubled.\n4. Roll, cut, prove 30 min.\n5. Fry 1 min per side at 175C.\n6. Drain. Dip in glaze. Set on rack.\n\nServe warm."
+              },
+              "target": {
+                "type": "SpecificResource",
+                "source": "http://localhost:3000/manifest/donut/manifest.json/canvas/0",
+                "selector": {
+                  "type": "FragmentSelector",
+                  "conformsTo": "https://iiif.io/api/extension/3d-mesh-selector/",
+                  "value": "channel=baseColor"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
