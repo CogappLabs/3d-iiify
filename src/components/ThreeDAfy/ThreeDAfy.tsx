@@ -117,9 +117,6 @@ const ThreeDAfy: React.FC = () => {
     return () => window.removeEventListener('clover:3d-gltf-ready', onReady)
   }, [])
 
-  const [saved, setSaved] = useState(false)
-  const [saving, setSaving] = useState(false)
-
   const exportGlbAs = async (
     consume: (buffer: ArrayBuffer) => void | Promise<void>,
   ) => {
@@ -170,45 +167,6 @@ const ThreeDAfy: React.FC = () => {
         `${slug(pickedModel?.label ?? 'model')}-baked.glb`,
       )
     })
-
-  // Client-side "bake": export the textured GLB and a self-contained IIIF
-  // manifest that references the GLB by its downloaded filename, then download
-  // both. No server write, so this works on read-only hosting (e.g. Vercel).
-  const saveAsIiif = async () => {
-    setSaving(true)
-    setSaved(false)
-    try {
-      const base = `${slug(pickedModel?.label ?? 'model')}-${slug(
-        pickedImage?.label ?? 'image',
-      )}-baked`
-      const glbName = `${base}.glb`
-      await exportGlbAs((buffer) => {
-        triggerDownload(
-          new Blob([buffer], { type: 'model/gltf-binary' }),
-          glbName,
-        )
-      })
-      const manifest = synthesiseManifest({
-        modelUrl: glbName,
-        modelFormat: 'model/gltf-binary',
-        modelLabel: pickedModel?.label ?? 'Model',
-        imageUrl: pickedImage?.textureUrl ?? '',
-        imageFormat: pickedImage?.format ?? 'image/jpeg',
-        imageLabel: pickedImage?.label ?? 'Image',
-      })
-      triggerDownload(
-        new Blob([JSON.stringify(manifest, null, 2)], {
-          type: 'application/json',
-        }),
-        `${base}.manifest.json`,
-      )
-      setSaved(true)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
-    } finally {
-      setSaving(false)
-    }
-  }
 
   const loadManifest = async (url: string) => {
     setError(null)
@@ -326,25 +284,11 @@ const ThreeDAfy: React.FC = () => {
             <button className={styles.button} onClick={downloadGlb}>
               Download .glb
             </button>
-            <button
-              className={styles.button}
-              onClick={saveAsIiif}
-              disabled={saving}
-            >
-              {saving ? 'Saving…' : 'Save as IIIF'}
-            </button>
             <button className={styles.button} onClick={reset}>
               Start over
             </button>
           </div>
         </header>
-        {saved && (
-          <div className={styles.savedBanner}>
-            Downloaded the baked <code>.glb</code> and a self-contained IIIF{' '}
-            <code>manifest.json</code> that references it. Serve them together
-            from the same folder to view the result in any IIIF 3D client.
-          </div>
-        )}
         <div style={{ flex: 1, minHeight: 0 }}>
           <CloverViewer
             key={`${pickedModel?.glb}-${pickedImage?.textureUrl}`}
@@ -440,10 +384,11 @@ const ThreeDAfy: React.FC = () => {
         )}
 
         <p className={styles.footnote}>
-          Texture mapping uses a Clover-local{' '}
-          <code>https://iiif.io/api/extension/3d-mesh-selector/</code>{' '}
-          FragmentSelector on a painting annotation. Not part of the IIIF 3D
-          draft, not currently proposed upstream.
+          Texture mapping uses a made-up IIIF extension cooked up for this
+          hackday: a custom FragmentSelector on a painting annotation, read by a
+          hacked build of Clover that was patched to support it. It is not part
+          of the IIIF 3D draft and not proposed upstream, so the composed result
+          is previewed here rather than exported as a portable manifest.
         </p>
       </div>
     </div>
