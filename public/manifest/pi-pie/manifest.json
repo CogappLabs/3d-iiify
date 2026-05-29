@@ -1,6 +1,6 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "http://localhost:3000/manifest/pi-pie/manifest.json",
+  "id": "/manifest/pi-pie/manifest.json",
   "type": "Manifest",
   "label": { "en": ["Pi Pie (image-on-mesh demo)"] },
   "summary": {
@@ -26,40 +26,40 @@
   ],
   "items": [
     {
-      "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0",
+      "id": "/manifest/pi-pie/manifest.json/canvas/0",
       "type": "Canvas",
       "label": { "en": ["Pi Pie"] },
       "height": 1000,
       "width": 1000,
       "items": [
         {
-          "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/page/0",
+          "id": "/manifest/pi-pie/manifest.json/canvas/0/page/0",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/anno/model",
+              "id": "/manifest/pi-pie/manifest.json/canvas/0/anno/model",
               "type": "Annotation",
               "motivation": "painting",
               "body": {
-                "id": "http://localhost:3000/manifest/pi-pie/pie.glb",
+                "id": "/manifest/pi-pie/pie.glb",
                 "type": "Model",
                 "format": "model/gltf-binary",
                 "label": { "en": ["Pie (glTF)"] }
               },
-              "target": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0"
+              "target": "/manifest/pi-pie/manifest.json/canvas/0"
             },
             {
-              "id": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0/anno/pi-texture",
+              "id": "/manifest/pi-pie/manifest.json/canvas/0/anno/pi-texture",
               "type": "Annotation",
               "motivation": "painting",
               "body": {
-                "id": "http://localhost:3000/manifest/pi-pie/pi.jpg",
+                "id": "/manifest/pi-pie/pi.jpg",
                 "type": "Image",
                 "format": "image/jpeg"
               },
               "target": {
                 "type": "SpecificResource",
-                "source": "http://localhost:3000/manifest/pi-pie/manifest.json/canvas/0",
+                "source": "/manifest/pi-pie/manifest.json/canvas/0",
                 "selector": {
                   "type": "FragmentSelector",
                   "conformsTo": "https://iiif.io/api/extension/3d-mesh-selector/",
