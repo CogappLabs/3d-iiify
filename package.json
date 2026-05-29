@@ -12,6 +12,7 @@
     "format": "biome format --write ."
   },
   "dependencies": {
+    "@react-three/fiber": "^8.18.0",
     "@samvera/clover-iiif": "github:lukew-cogapp/clover-iiif#feat/3d-model-viewer",
     "next": "16.2.6",
     "react": "^18.3.1",

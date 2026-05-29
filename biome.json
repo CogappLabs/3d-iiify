@@ -35,6 +35,9 @@
         "useButtonType": "off",
         "useKeyWithClickEvents": "off",
         "noStaticElementInteractions": "off"
+      },
+      "style": {
+        "noDescendingSpecificity": "off"
       }
     },
     "domains": {

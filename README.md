@@ -17,8 +17,11 @@ A Cogapp hack project by Luke Watson-Davies.
    painting annotation.
 
 From the viewer you can **Download .glb** (the baked, textured model) or
-**Save as IIIF** (writes a manifest + GLB under `public/manifest/baked/` and
-gives you a shareable manifest URL).
+**Save as IIIF**, which downloads the baked GLB plus a self-contained IIIF
+manifest that references it by filename. Both are produced entirely in the
+browser (no server write), so the app deploys cleanly to static / serverless
+hosts. Serve the two files together from the same folder to view the result in
+any IIIF 3D client.
 
 ## Clover dependency
 
@@ -57,12 +60,12 @@ npm run typecheck  # tsc --noEmit
 npm run build      # production build
 ```
 
-## Deployment note
+## Deployment
 
-The **Save as IIIF** endpoint (`/api/3d-iiify/bake`) writes files to
-`public/manifest/baked/` on the server filesystem. On read-only serverless
-platforms (e.g. Vercel) this directory is not writable; deploying there needs
-the bake step swapped for object storage (S3, R2, etc.).
+Deploys to Vercel (or any static/serverless host) with no extra config. There
+is no server-side state: the viewer and both "Save" actions run in the browser.
+Large `.glb` demo assets are in Git LFS, so the host's build step must fetch LFS
+objects (Vercel does this automatically when LFS is enabled on the repo).
 
 ## Stack
 

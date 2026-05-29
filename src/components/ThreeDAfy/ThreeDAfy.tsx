@@ -117,7 +117,7 @@ const ThreeDAfy: React.FC = () => {
     return () => window.removeEventListener('clover:3d-gltf-ready', onReady)
   }, [])
 
-  const [savedManifest, setSavedManifest] = useState<string | null>(null)
+  const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
 
   const exportGlbAs = async (
@@ -146,44 +146,63 @@ const ThreeDAfy: React.FC = () => {
     })
   }
 
+  const slug = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+
+  const triggerDownload = (blob: Blob, filename: string) => {
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    URL.revokeObjectURL(url)
+  }
+
   const downloadGlb = () =>
     exportGlbAs((buffer) => {
-      const blob = new Blob([buffer], { type: 'model/gltf-binary' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${(pickedModel?.label ?? 'model')
-        .toLowerCase()
-        .replace(/\s+/g, '-')}-baked.glb`
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      URL.revokeObjectURL(url)
+      triggerDownload(
+        new Blob([buffer], { type: 'model/gltf-binary' }),
+        `${slug(pickedModel?.label ?? 'model')}-baked.glb`,
+      )
     })
 
-  const bakeToServer = async () => {
+  // Client-side "bake": export the textured GLB and a self-contained IIIF
+  // manifest that references the GLB by its downloaded filename, then download
+  // both. No server write, so this works on read-only hosting (e.g. Vercel).
+  const saveAsIiif = async () => {
     setSaving(true)
-    setSavedManifest(null)
+    setSaved(false)
     try {
-      await exportGlbAs(async (buffer) => {
-        const bytes = new Uint8Array(buffer)
-        let binary = ''
-        for (let i = 0; i < bytes.length; i++)
-          binary += String.fromCharCode(bytes[i])
-        const glbBase64 = btoa(binary)
-        const res = await fetch('/api/3d-iiify/bake', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modelLabel: pickedModel?.label,
-            imageLabel: pickedImage?.label,
-            glbBase64,
-          }),
-        })
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const data = await res.json()
-        setSavedManifest(data.manifestUrl)
+      const base = `${slug(pickedModel?.label ?? 'model')}-${slug(
+        pickedImage?.label ?? 'image',
+      )}-baked`
+      const glbName = `${base}.glb`
+      await exportGlbAs((buffer) => {
+        triggerDownload(
+          new Blob([buffer], { type: 'model/gltf-binary' }),
+          glbName,
+        )
       })
+      const manifest = synthesiseManifest({
+        modelUrl: glbName,
+        modelFormat: 'model/gltf-binary',
+        modelLabel: pickedModel?.label ?? 'Model',
+        imageUrl: pickedImage?.textureUrl ?? '',
+        imageFormat: pickedImage?.format ?? 'image/jpeg',
+        imageLabel: pickedImage?.label ?? 'Image',
+      })
+      triggerDownload(
+        new Blob([JSON.stringify(manifest, null, 2)], {
+          type: 'application/json',
+        }),
+        `${base}.manifest.json`,
+      )
+      setSaved(true)
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
@@ -309,7 +328,7 @@ const ThreeDAfy: React.FC = () => {
             </button>
             <button
               className={styles.button}
-              onClick={bakeToServer}
+              onClick={saveAsIiif}
               disabled={saving}
             >
               {saving ? 'Saving…' : 'Save as IIIF'}
@@ -319,20 +338,11 @@ const ThreeDAfy: React.FC = () => {
             </button>
           </div>
         </header>
-        {savedManifest && (
+        {saved && (
           <div className={styles.savedBanner}>
-            Saved IIIF manifest:{' '}
-            <a href={savedManifest} target="_blank" rel="noreferrer">
-              {savedManifest}
-            </a>{' '}
-            ·{' '}
-            <a
-              href={`/?model=${encodeURIComponent(
-                savedManifest.replace(/manifest\.json$/, 'model.glb'),
-              )}&modelLabel=${encodeURIComponent(pickedModel?.label ?? '')}&image=${encodeURIComponent(pickedImage?.textureUrl ?? '')}&imageLabel=${encodeURIComponent(pickedImage?.label ?? '')}`}
-            >
-              re-open
-            </a>
+            Downloaded the baked <code>.glb</code> and a self-contained IIIF{' '}
+            <code>manifest.json</code> that references it. Serve them together
+            from the same folder to view the result in any IIIF 3D client.
           </div>
         )}
         <div style={{ flex: 1, minHeight: 0 }}>
